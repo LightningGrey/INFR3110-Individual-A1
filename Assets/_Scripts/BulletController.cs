@@ -9,15 +9,15 @@ public class BulletController : MonoBehaviour
     public Boundary boundary;
 
     //TODO: create a reference to the BulletPoolManager
-    [SerializeField]
-    private GameObject _managerObject;
-    private BulletPoolManager _manager;
+    //[SerializeField]
+    //private GameObject _managerObject;
+    //private BulletPoolManager _manager;
 
     void Start()
     {
         boundary.Top = 2.45f;
-        _managerObject = GameObject.FindGameObjectWithTag("Manager");
-        _manager = _managerObject.GetComponent<BulletPoolManager>();
+        //_managerObject = GameObject.FindGameObjectWithTag("Manager");
+        //_manager = _managerObject.GetComponent<BulletPoolManager>();
     }
 
 
@@ -40,7 +40,7 @@ public class BulletController : MonoBehaviour
             //TODO: This code needs to change to use the BulletPoolManager's
             //TODO: ResetBullet function which will return the bullet to the pool
             //Destroy(this.gameObject);
-            _manager.ResetBullet(gameObject);
+            BulletPoolManager.Instance().ResetBullet(gameObject);
         }
     }
 }

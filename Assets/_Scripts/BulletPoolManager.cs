@@ -1,23 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 // TODO: Bonus - make this class a Singleton!
 
-[System.Serializable]
-public class BulletPoolManager : MonoBehaviour
-{
-    public GameObject bullet;
+//[System.Serializable]
+public class BulletPoolManager { 
+
+    private GameObject bullet;
     private GameObject bulletClone;
-    [SerializeField]
-    private int _maxBullets = 1;
+    //[SerializeField]
+    private int _maxBullets = 6;
 
     //TODO: create a structure to contain a collection of bullets
     private Queue<GameObject> _bulletPool;
 
+    //singleton
+    private static BulletPoolManager m_instance = null;
+
+    private BulletPoolManager()
+    {
+        bullet = Resources.Load("Prefabs/Bullet") as GameObject;
+        Start();
+    }
+
+    public static BulletPoolManager Instance()
+    {
+        if (m_instance == null)
+        {
+            m_instance = new BulletPoolManager();
+        }
+
+        return m_instance;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
+        bullet = Resources.Load("Prefabs/Bullet") as GameObject;
+
         // TODO: add a series of bullets to the Bullet Pool
         _bulletPool = new Queue<GameObject>();
         _BuildBulletPool();
@@ -34,7 +57,7 @@ public class BulletPoolManager : MonoBehaviour
     {
         for (int i = 0; i < _maxBullets; i++)
         {
-            bulletClone = Instantiate(bullet);
+            var bulletClone = MonoBehaviour.Instantiate(bullet);
             bulletClone.SetActive(false);
             _bulletPool.Enqueue(bulletClone);
         }
@@ -48,7 +71,7 @@ public class BulletPoolManager : MonoBehaviour
             bullet = _bulletPool.Dequeue();
         } else
         {
-            _bulletPool.Enqueue(Instantiate(bullet));
+            _bulletPool.Enqueue(MonoBehaviour.Instantiate(bullet));
         }
         bullet.SetActive(true);
         return bullet;

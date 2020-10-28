@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     //TODO: create a reference to the BulletPoolManager here
     [SerializeField]
+    private GameObject _managerObject;
     private BulletPoolManager _manager;
 
     // Start is called before the first frame update
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour
         _yaySound = gameController.audioSources[(int)SoundClip.YAY];
         _bulletSound = GetComponent<AudioSource>();
         _rigidbody2D = GetComponent<Rigidbody2D>();
+
+        _manager = _managerObject.GetComponent<BulletPoolManager>();
 
         // Shoots bullet on a delay if button is pressed
         StartCoroutine(FireBullet());
@@ -123,7 +126,8 @@ public class PlayerController : MonoBehaviour
                 //TODO: GetBullet function which will return a reference to a 
                 //TODO: bullet object. 
                 //TODO: Ensure you position the new bullet at the bulletSpawn position
-                Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
+                //Instantiate(bullet, bulletSpawn.position, Quaternion.identity);
+                _manager.GetBullet().transform.position = bulletSpawn.position;
             }
 
         }

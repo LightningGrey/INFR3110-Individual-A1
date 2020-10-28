@@ -8,8 +8,9 @@ using UnityEngine;
 public class BulletPoolManager : MonoBehaviour
 {
     public GameObject bullet;
+    private GameObject bulletClone;
     [SerializeField]
-    private int _maxBullets = 0;
+    private int _maxBullets = 1;
 
     //TODO: create a structure to contain a collection of bullets
     private Queue<GameObject> _bulletPool;
@@ -19,6 +20,7 @@ public class BulletPoolManager : MonoBehaviour
     {
         // TODO: add a series of bullets to the Bullet Pool
         _bulletPool = new Queue<GameObject>();
+        _BuildBulletPool();
 
     }
 
@@ -27,15 +29,27 @@ public class BulletPoolManager : MonoBehaviour
     {
         
     }
+    
+    private void _BuildBulletPool()
+    {
+        for (int i = 0; i < _maxBullets; i++)
+        {
+            bulletClone = Instantiate(bullet);
+            bulletClone.SetActive(false);
+            _bulletPool.Enqueue(bulletClone);
+        }
+    }
 
     //TODO: modify this function to return a bullet from the Pool
     public GameObject GetBullet()
     {
-        if (_bulletPool.Count < 0)
+        if (!isEmpty())
         {
-            _bulletPool.Enqueue(bullet);
+            bullet = _bulletPool.Dequeue();
+        } else
+        {
+            _bulletPool.Enqueue(Instantiate(bullet));
         }
-        bullet = _bulletPool.Dequeue();
         bullet.SetActive(true);
         return bullet;
     }
@@ -46,4 +60,15 @@ public class BulletPoolManager : MonoBehaviour
         _bullet.SetActive(false);
         _bulletPool.Enqueue(_bullet);
     }
+
+    public int currentSize()
+    {
+        return _bulletPool.Count;
+    }
+
+    public bool isEmpty()
+    {
+        return (_bulletPool.Count <= 0);
+    }
+
 }

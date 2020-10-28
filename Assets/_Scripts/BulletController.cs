@@ -9,6 +9,8 @@ public class BulletController : MonoBehaviour
     public Boundary boundary;
 
     //TODO: create a reference to the BulletPoolManager
+    [SerializeField]
+    private BulletPoolManager _manager;
 
     void Start()
     {
@@ -34,7 +36,8 @@ public class BulletController : MonoBehaviour
         {
             //TODO: This code needs to change to use the BulletPoolManager's
             //TODO: ResetBullet function which will return the bullet to the pool
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            _manager.ResetBullet(this.gameObject);
         }
     }
 }

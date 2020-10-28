@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private bool isFiring = false;
 
     //TODO: create a reference to the BulletPoolManager here
+    [SerializeField]
+    private BulletPoolManager _manager;
 
     // Start is called before the first frame update
     void Start()

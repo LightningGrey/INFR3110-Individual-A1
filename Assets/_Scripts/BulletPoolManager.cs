@@ -8,6 +8,8 @@ using UnityEngine;
 public class BulletPoolManager : MonoBehaviour
 {
     public GameObject bullet;
+    [SerializeField]
+    private int _maxBullets = 0;
 
     //TODO: create a structure to contain a collection of bullets
     private Queue<GameObject> _bulletPool;
@@ -29,6 +31,10 @@ public class BulletPoolManager : MonoBehaviour
     //TODO: modify this function to return a bullet from the Pool
     public GameObject GetBullet()
     {
+        if (_bulletPool.Count < 0)
+        {
+            _bulletPool.Enqueue(bullet);
+        }
         bullet = _bulletPool.Dequeue();
         bullet.SetActive(true);
         return bullet;

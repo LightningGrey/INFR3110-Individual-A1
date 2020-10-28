@@ -9,7 +9,6 @@ using UnityEngine;
 public class BulletPoolManager { 
 
     private GameObject bullet;
-    private GameObject bulletClone;
     //[SerializeField]
     private int _maxBullets = 6;
 
@@ -21,7 +20,6 @@ public class BulletPoolManager {
 
     private BulletPoolManager()
     {
-        bullet = Resources.Load("Prefabs/Bullet") as GameObject;
         Start();
     }
 
